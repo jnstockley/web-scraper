@@ -9,7 +9,7 @@ import toml
 from pandas import DataFrame
 
 
-def read_config(path: str = '../config.toml'):
+def read_config(path: str = 'config.toml'):
     return toml.load(path)
 
 

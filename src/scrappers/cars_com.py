@@ -77,8 +77,8 @@ def check_new_listings(previous_cars: DataFrame, new_cars: list[Car]) -> DataFra
 
 
 def export(cars: list[Car]) -> None:
-    data_directory = './data/'
-    archive_directory = './data/archive'
+    data_directory = '/web-scrapper/data/'
+    archive_directory = '/web-scrapper/data/archive/'
     if not os.path.exists(data_directory):
         os.makedirs(data_directory)
 
@@ -89,23 +89,3 @@ def export(cars: list[Car]) -> None:
 
     df.to_csv(f"{data_directory}/previous_cars.csv", index=False)
     df.to_csv(f"{archive_directory}/cars_{datetime.now()}.csv", index=False)
-
-
-def main() -> None:
-    old_data = get_old_data()
-
-    url = "https://www.cars.com/shopping/results/?dealer_id=&electric_total_range_miles_min=330&include_shippable=true&keyword=&list_price_max=&list_price_min=&makes[]=hyundai&maximum_distance=all&mileage_max=&models[]=hyundai-ioniq_6&monthly_payment=&page_size=100&sort=listed_at_desc&stock_type=new&trims[]=hyundai-ioniq_6-se&year_max=&year_min=&zip=52241"
-    data = get_data(url)
-    cars = parse(data)
-
-    new_data = check_new_listings(old_data, cars)
-
-    if new_data.shape[0] > 0:
-        send_email(new_data)
-        print("Sending email...")
-
-    export(cars)
-
-
-if __name__ == '__main__':
-    main()
