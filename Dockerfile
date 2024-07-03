@@ -10,6 +10,8 @@ RUN apk update
 
 RUN apk add --no-cache curl gcc libressl-dev musl-dev libffi-dev
 
+RUN python3 -m pip install --upgrade pip
+
 RUN pip install --user pipx
 
 RUN pipx install poetry
