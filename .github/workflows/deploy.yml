@@ -52,5 +52,5 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: jnstockley/web-scrapper:latest,jnstockley/web-scrapper:$DATE
+          tags: jnstockley/web-scrapper:latest,jnstockley/web-scrapper:${{ env.DATE }}
           labels: ${{ steps.meta.outputs.labels }}
