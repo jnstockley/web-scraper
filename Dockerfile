@@ -1,24 +1,12 @@
-FROM python:3.12.6-alpine3.20
+FROM jnstockley/poetry:1.8.3-python3.12.6
 
-ENV PATH="/root/.local/bin:$PATH"
-
-ENV PYTHONPATH="/web-scrapper"
-
-ENV PYTHONUNBUFFERED=1
-
-RUN apk update
-
-RUN apk add --no-cache curl gcc libressl-dev musl-dev libffi-dev
-
-RUN python3 -m pip install --upgrade pip
-
-RUN pip install --user pipx
-
-RUN pipx install poetry
-
-RUN apk del curl gcc libressl-dev musl-dev libffi-dev
+USER root
 
 RUN mkdir /web-scrapper
+
+RUN chown -R python3:python3 /web-scrapper
+
+USER python3
 
 COPY . /web-scrapper
 
