@@ -1,18 +1,21 @@
 name: Publish Docker image
 
 on:
+  release:
+    types: [published]
+  pull_request:
   push:
     branches:
       - main
     paths:
-      - 'Dockerfile'
-     # - '.github/workflows/deploy.yml'
-      - 'src/**'
-      - 'poetry.lock'
-      - 'pyproject.toml'
+      - Dockerfile
+      - src/**
+      - poetry.lock
+      - pyproject.toml
 
 jobs:
   push_to_registries:
+    if: github.event_name == 'release' || github.base_ref == 'main'
     name: Push Docker image to multiple registries
     runs-on: ubuntu-latest
     permissions:
@@ -43,20 +46,27 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
+        if: github.event_name == 'release'
         uses: docker/metadata-action@v5
         with:
           images: |
-            jnstockley/api
-            ghcr.io/${{ github.repository }}
-      - name: Get current date
-        id: date
-        run: echo "DATE=$(date +'%Y.%m.%d')" >> $GITHUB_ENV
+            jnstockley/web-scrapper
+            ghcr.io/jnstockley/web-scrapper
+          tags: |
+            latest
+            ${{ github.event.release.tag_name }}
+
+      - name: Extract metadata for main branch
+        id: meta_main
+        if: github.base_ref == 'main'
+        run: |
+          echo "tags=jnstockley/web-scrapper:testing,jnstockley/web-scrapper:testing-$(date +'%Y%m%d%H%M%S'),ghcr.io/jnstockley/web-scrapper:testing,ghcr.io/jnstockley/web-scrapper:testing-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v6
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/386,linux/amd64,linux/arm64
           push: true
-          tags: jnstockley/web-scrapper:latest,jnstockley/web-scrapper:${{ env.DATE }}
+          tags: ${{ steps.meta.outputs.tags || env.tags }}
           labels: ${{ steps.meta.outputs.labels }}

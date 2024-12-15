@@ -1,19 +1,28 @@
-FROM jnstockley/poetry:1.8.5
+FROM jnstockley/poetry:1.8.5-python3.13.1 AS build
 
-USER root
-
-RUN mkdir /web-scrapper
-
-RUN chown -R python3:python3 /web-scrapper
-
-USER python3
-
-COPY . /web-scrapper
+RUN apk update && \
+    apk upgrade && \
+    apk add alpine-sdk python3-dev musl-dev libffi-dev gcc curl openssl-dev cargo pkgconfig && \
+    mkdir /web-scrapper
 
 WORKDIR /web-scrapper
 
-ENV SLEEP_TIME_SEC=21600
+COPY poetry.lock /web-scrapper
+
+COPY pyproject.toml /web-scrapper
 
 RUN poetry install --no-root
+
+COPY src /web-scrapper/src
+
+FROM jnstockley/poetry:1.8.5-python3.13.1
+
+COPY --from=build /root/.cache/pypoetry/virtualenvs  /root/.cache/pypoetry/virtualenvs
+
+COPY --from=build /web-scrapper /web-scrapper
+
+WORKDIR /web-scrapper
+
+ENV PYTHONPATH=/web-scrapper:$PYTHONPATH
 
 ENTRYPOINT ["poetry", "run", "python3", "src/main.py"]
