@@ -1,11 +1,13 @@
 services:
   web-scrapper:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: web_scrapper_dev
     image: web-scrapper:dev
-    working_dir: /web-scrapper
     env_file:
       - .env
-    restart: always
+    restart: on-failure
     volumes:
       - ./config.toml:/web-scrapper/config.toml
       - ./data/:/web-scrapper/data/
