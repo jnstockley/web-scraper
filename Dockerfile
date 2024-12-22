@@ -1,8 +1,9 @@
-FROM jnstockley/poetry:1.8.5-python3.13.1 AS build
+FROM python:3.13.1-slim AS build
 
-RUN apk update && \
-    apk upgrade && \
-    apk add alpine-sdk python3-dev musl-dev libffi-dev gcc curl openssl-dev cargo pkgconfig && \
+COPY requirements.txt .
+
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
     mkdir /web-scrapper
 
 WORKDIR /web-scrapper
@@ -13,15 +14,19 @@ COPY pyproject.toml /web-scrapper
 
 RUN poetry install --no-root
 
-COPY src /web-scrapper/src
+COPY  src /web-scrapper/src
 
-FROM jnstockley/poetry:1.8.5-python3.13.1
+FROM python:3.13.1-slim
+
+COPY --from=build /usr/local/ /usr/local/
 
 COPY --from=build /root/.cache/pypoetry/virtualenvs  /root/.cache/pypoetry/virtualenvs
 
 COPY --from=build /web-scrapper /web-scrapper
 
 WORKDIR /web-scrapper
+
+ENV PATH="/root/.local/bin:${PATH}"
 
 ENV PYTHONPATH=/web-scrapper:$PYTHONPATH
 

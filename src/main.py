@@ -2,8 +2,9 @@ import time
 import os
 import logging
 
-from src.email_sender import send_email
-from src.scrappers.cars_com import get_old_data, get_data, parse, check_new_listings, export
+from src.email_sender import send_email, send_email_str
+from src.scrappers.cars_com import check_new_listings, export, parse, get_old_data
+from src.scrappers.text_search import get_data, check_for_string
 
 
 def main():
@@ -24,16 +25,13 @@ def main():
 
     export(cars)
 
+def tesla_main():
+    data = get_data("https://www.tesla.com/NACS")
+    found = check_for_string(data, "Hyundai")
+
+    if found:
+        send_email_str("Hyundai found in Tesla website")
+
 
 if __name__ == '__main__':
-    print("Starting...")
-    try:
-        sleep_time_secs = int(os.environ['SLEEP_TIME_SEC'])
-    except KeyError:
-        print("Default sleep_time_sec to 21600")
-        sleep_time_secs = 21600
-
-    while True:
-        main()
-        print(f"Sleeping for {sleep_time_secs} seconds...")
-        time.sleep(sleep_time_secs)
+    tesla_main()

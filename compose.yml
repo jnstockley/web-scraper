@@ -7,7 +7,6 @@ services:
     image: web-scrapper:dev
     env_file:
       - .env
-    restart: on-failure
+    restart: no
     volumes:
-      - ./config.toml:/web-scrapper/config.toml
       - ./data/:/web-scrapper/data/
