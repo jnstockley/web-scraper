@@ -1,7 +1,3 @@
-import time
-import os
-import logging
-
 from src.email_sender import send_email, send_email_str
 from src.scrappers.cars_com import check_new_listings, export, parse, get_old_data
 from src.scrappers.text_search import get_data, check_for_string
