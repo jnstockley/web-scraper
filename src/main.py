@@ -1,6 +1,20 @@
+import time
+import os
+import logging
+
+from dotenv import load_dotenv
+
 from src.email_sender import send_email, send_email_str
 from src.scrappers.cars_com import check_new_listings, export, parse, get_old_data
 from src.scrappers.text_search import get_data, check_for_string
+
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+        '%(asctime)s [%(name)-12s] %(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
 
 
 def main():
@@ -30,4 +44,11 @@ def tesla_main():
 
 
 if __name__ == '__main__':
-    tesla_main()
+    load_dotenv()
+    sleep_time_sec = int(os.environ['SLEEP_TIME_SEC'])
+    logger.info(f"Starting WebScrapper")
+    while True:
+        logger.info("Checking tesla website")
+        tesla_main()
+        logger.info(f"Sleeping for {sleep_time_sec} seconds")
+        time.sleep(sleep_time_sec)
