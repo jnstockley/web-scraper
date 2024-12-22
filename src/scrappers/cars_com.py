@@ -8,8 +8,6 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from pandas import DataFrame
 
-from src.email_sender import send_email
-
 
 @dataclass
 class Car:

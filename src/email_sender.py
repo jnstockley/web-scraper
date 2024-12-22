@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email import encoders
 from email.mime.base import MIMEBase
@@ -5,21 +6,17 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from io import StringIO
 
-import toml
+from dotenv import load_dotenv
 from pandas import DataFrame
 
 
-def read_config(path: str = 'config.toml'):
-    return toml.load(path)
-
-
 def send_email(new_cars: DataFrame):
-    config = read_config()
-    sender_email = config['sender_email']
-    receiver_email = config['receiver_email']
-    password = config['password']
-    smtp_server = config['smtp_server']
-    smtp_port = config['smtp_port']
+    load_dotenv()
+    sender_email = os.environ['SENDER_EMAIL']
+    receiver_email = os.environ['RECEIVER_EMAIL']
+    password = os.environ['PASSWORD']
+    smtp_server = os.environ['SMTP_SERVER']
+    smtp_port: int = int(os.environ['SMTP_PORT'])
 
     message = MIMEMultipart('related')
     message["Subject"] = "New Car Listings!"
@@ -56,3 +53,47 @@ def send_email(new_cars: DataFrame):
         server.sendmail(
             sender_email, receiver_email, message.as_string()
         )
+
+
+def send_email_str(text: str):
+    load_dotenv()
+    sender_email = os.environ['SENDER_EMAIL']
+    from_email = os.environ['FROM_EMAIL']
+    receiver_email = os.environ['RECEIVER_EMAIL']
+    password = os.environ['PASSWORD']
+    smtp_server = os.environ['SMTP_SERVER']
+    smtp_port: int = int(os.environ['SMTP_PORT'])
+    tls: bool = bool(os.environ['TLS'])
+
+    message = MIMEMultipart('related')
+    message["Subject"] = "Tesla NACS Website Update!"
+    message["From"] = from_email
+    message["To"] = receiver_email
+
+    html_part = MIMEMultipart('related')
+
+    html = f"""
+    <html>
+        <body>
+            {text}
+        </body>
+    </html>"""
+
+    html_part.attach(MIMEText(html, 'html'))
+    message.attach(html_part)
+
+    if tls:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, password)
+
+            server.sendmail(
+                from_email, receiver_email, message.as_string()
+            )
+    else:
+        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
+            server.login(sender_email, password)
+
+            server.sendmail(
+                from_email, receiver_email, message.as_string()
+            )
