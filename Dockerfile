@@ -12,7 +12,7 @@ COPY poetry.lock /web-scrapper
 
 COPY pyproject.toml /web-scrapper
 
-RUN poetry install --no-root
+RUN poetry install
 
 COPY  src /web-scrapper/src
 
