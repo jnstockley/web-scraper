@@ -1,12 +1,9 @@
 services:
   web-scrapper:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: web_scrapper_dev
-    image: web-scrapper:dev
+    container_name: web_scrapper
+    image: jnstockley/web-scrapper:latest
     env_file:
       - .env
-    restart: no
+    restart: always
     volumes:
       - ./data/:/web-scrapper/data/

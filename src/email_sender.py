@@ -13,14 +13,16 @@ from pandas import DataFrame
 def send_email(new_cars: DataFrame):
     load_dotenv()
     sender_email = os.environ['SENDER_EMAIL']
+    from_email = os.environ['FROM_EMAIL']
     receiver_email = os.environ['RECEIVER_EMAIL']
     password = os.environ['PASSWORD']
     smtp_server = os.environ['SMTP_SERVER']
     smtp_port: int = int(os.environ['SMTP_PORT'])
+    tls: bool = bool(os.environ['TLS'])
 
     message = MIMEMultipart('related')
     message["Subject"] = "New Car Listings!"
-    message["From"] = sender_email
+    message["From"] = from_email
     message["To"] = receiver_email
 
     csv_buf = StringIO()
@@ -48,11 +50,21 @@ def send_email(new_cars: DataFrame):
     attach_part.attach(part)
     message.attach(attach_part)
 
-    with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
-        server.login(sender_email, password)
-        server.sendmail(
-            sender_email, receiver_email, message.as_string()
-        )
+    if tls:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, password)
+
+            server.sendmail(
+                from_email, receiver_email, message.as_string()
+            )
+    else:
+        with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
+            server.login(sender_email, password)
+
+            server.sendmail(
+                from_email, receiver_email, message.as_string()
+            )
 
 
 def send_email_str(text: str):
