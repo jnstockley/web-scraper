@@ -1,4 +1,4 @@
-import os
+'''import os
 from dataclasses import dataclass
 import json
 from datetime import datetime
@@ -86,4 +86,4 @@ def export(cars: list[Car]) -> None:
     df = pd.DataFrame([x.as_dict() for x in cars])
 
     df.to_csv(f"{data_directory}/previous_cars.csv", index=False)
-    df.to_csv(f"{archive_directory}/cars_{datetime.now()}.csv", index=False)
+    df.to_csv(f"{archive_directory}/cars_{datetime.now()}.csv", index=False)'''
