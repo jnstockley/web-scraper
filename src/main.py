@@ -4,20 +4,15 @@ import logging
 
 from dotenv import load_dotenv
 
+from src import logger
 from src.email_sender import send_email, send_email_str
-from src.scrappers.cars_com import check_new_listings, export, parse, get_old_data
-from src.scrappers.text_search import get_data, check_for_string
-
-logger = logging.getLogger(__name__)
-handler = logging.StreamHandler()
-formatter = logging.Formatter(
-        '%(asctime)s [%(name)-12s] %(levelname)-8s %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-logger.setLevel(logging.DEBUG)
+from src.scrappers import text
+#from src.scrappers.cars_com import check_new_listings, export, parse, get_old_data
 
 
-def main():
+
+
+'''def main():
     old_data = get_old_data()
 
     url = ("https://www.cars.com/shopping/results/?dealer_id=&electric_total_range_miles_min=330&include_shippable"
@@ -33,22 +28,25 @@ def main():
         send_email(new_data)
         print("Sending email...")
 
-    export(cars)
-
-def tesla_main():
-    data = get_data("https://www.tesla.com/NACS")
-    found = check_for_string(data, "Hyundai")
-
-    if found:
-        send_email_str("Hyundai found in Tesla website")
+    export(cars)'''
 
 
 if __name__ == '__main__':
     load_dotenv()
     sleep_time_sec = int(os.environ['SLEEP_TIME_SEC'])
     logger.info(f"Starting WebScrapper")
+    scrapper = os.environ.get('SCRAPPER', '')
+    logger.info(f"Scrapper: {scrapper}")
     while True:
-        logger.info("Checking tesla website")
-        tesla_main()
+        match scrapper:
+            case "text":
+                url = os.environ.get('URL', '')
+                scrape_text = os.environ.get('TEXT', '')
+                logger.info("Using text scrapper")
+                logger.info(f"Checking URL: {url} for text: {scrape_text}")
+                text.scrape(url, scrape_text)
+            case _:
+                logger.error("Invalid scrapper specified")
+                break
         logger.info(f"Sleeping for {sleep_time_sec} seconds")
         time.sleep(sleep_time_sec)
