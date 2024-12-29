@@ -2,6 +2,7 @@ import gzip
 import os
 from typing import Literal
 
+import pandas as pd
 import tls_client
 from typing_extensions import Optional, Union
 
@@ -78,7 +79,7 @@ def make_tls_request(method: Literal["GET", "POST", "PUT", "DELETE"], url: str, 
 
     raise ConnectionError(f"Request failed with status code {response.status_code}")
 
-def read_data(file_name: str = 'data.gz') -> str | None:
+def read_data_compressed(file_name: str = 'data.gz') -> str | None:
     # check if path exists
     path = f"./data/{file_name}"
 
@@ -88,7 +89,18 @@ def read_data(file_name: str = 'data.gz') -> str | None:
     with gzip.open(f"./data/{file_name}", 'rt', encoding='utf-8') as f:
         return f.read()
 
+def read_data_csv(file_name: str = 'data.csv') -> pd.DataFrame | None:
+    path = f"./data/{file_name}"
 
-def save_data(data: str, file_name: str = 'data.gz'):
+    if not os.path.exists(path):
+        return None
+
+    return pd.read_csv(path)
+
+
+def save_data_compressed(data: str, file_name: str = 'data.gz'):
     with gzip.open(f"./data/{file_name}", 'wb') as f:
         f.write(data.encode())
+
+def save_data_csv(data: pd.DataFrame, file_name: str = 'data.csv'):
+    data.to_csv(f"./data/{file_name}", index=False)

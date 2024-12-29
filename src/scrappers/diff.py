@@ -1,18 +1,18 @@
 from src import logger
 from src.email_sender import send_email_str
 from src.scrappers import generic
-from src.scrappers.generic import read_data, save_data
+from src.scrappers.generic import read_data_compressed, save_data_compressed
 from difflib import ndiff
 
 
 def scrape(url: str, percentage: float = 10):
     session = generic.create_tls_session()
 
-    old_data = read_data()
+    old_data = read_data_compressed()
 
     data = generic.make_tls_request("GET", url, session)
 
-    save_data(data)
+    save_data_compressed(data)
 
     if old_data is None:
         logger.info("No old data found")
