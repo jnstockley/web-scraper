@@ -8,7 +8,7 @@ from pandas import DataFrame
 from src import logger
 from src.email_sender import send_email
 from src.scrappers import generic
-from src.scrappers.generic import save_data_csv, save_data_compressed
+from src.scrappers.generic import save_data_csv
 
 
 @dataclass
