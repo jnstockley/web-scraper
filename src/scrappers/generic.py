@@ -1,3 +1,5 @@
+import gzip
+import os
 from typing import Literal
 
 import tls_client
@@ -75,3 +77,18 @@ def make_tls_request(method: Literal["GET", "POST", "PUT", "DELETE"], url: str, 
         return response.content.decode(encoding='utf-8')
 
     raise ConnectionError(f"Request failed with status code {response.status_code}")
+
+def read_data(file_name: str = 'data.gz') -> str | None:
+    # check if path exists
+    path = f"./data/{file_name}"
+
+    if not os.path.exists(path):
+        return None
+
+    with gzip.open(f"./data/{file_name}", 'rt', encoding='utf-8') as f:
+        return f.read()
+
+
+def save_data(data: str, file_name: str = 'data.gz'):
+    with gzip.open(f"./data/{file_name}", 'wb') as f:
+        f.write(data.encode())
