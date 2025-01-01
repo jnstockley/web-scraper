@@ -10,3 +10,9 @@ services:
     restart: no
     volumes:
       - ./data/:/web-scrapper/data/
+    healthcheck:
+      test: poetry run python3 src/main.py
+      interval: 60s
+      retries: 5
+      start_period: 60s
+      timeout: 30s
