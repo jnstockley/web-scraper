@@ -8,7 +8,7 @@ from pandas import DataFrame
 from src import logger
 from src.email_sender import send_email
 from src.scrappers import generic
-from src.scrappers.generic import save_data_csv
+from src.scrappers.generic import save_data_csv, save_healthcheck_file
 
 
 @dataclass
@@ -73,3 +73,5 @@ def scrape(url: str):
     if new_data.shape[0] > 0:
         logger.info("Found new listings")
         send_email(new_data)
+
+    save_healthcheck_file('.cars_com_healthcheck')

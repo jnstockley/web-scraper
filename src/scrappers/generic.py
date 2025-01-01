@@ -1,5 +1,6 @@
 import gzip
 import os
+import time
 from typing import Literal
 
 import pandas as pd
@@ -104,3 +105,15 @@ def save_data_compressed(data: str, file_name: str = 'data.gz'):
 
 def save_data_csv(data: pd.DataFrame, file_name: str = 'data.csv'):
     data.to_csv(f"./data/{file_name}", index=False)
+
+def save_healthcheck_file(file_name: str):
+    with open(f"./data/{file_name}", 'w') as f:
+        f.write("OK")
+
+def healthcheck(file_name: str, sleep_time_sec: int) -> bool:
+    file_path = f"./data/{file_name}"
+    if not os.path.exists(file_path):
+        return False
+    last_modified_time = os.path.getmtime(file_path)
+    current_time = time.time()
+    return (current_time - last_modified_time) <= (sleep_time_sec + 60)

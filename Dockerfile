@@ -30,4 +30,6 @@ ENV PATH="/root/.local/bin:${PATH}"
 
 ENV PYTHONPATH=/web-scrapper:$PYTHONPATH
 
+HEALTHCHECK --interval=60s --timeout=30s --start-period=60s --retries=5 CMD [ "poetry", "run", "python3", "src/healthcheck.py" ]
+
 ENTRYPOINT ["poetry", "run", "python3", "src/main.py"]
