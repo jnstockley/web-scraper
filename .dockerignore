@@ -1,7 +1,10 @@
-config.toml
+.github/
+data/
 .dockerignore
 .gitignore
 .idea
 .git
 .venv
-.env
+*.env
+*.yml
+Dockerfile

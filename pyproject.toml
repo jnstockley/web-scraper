@@ -1,20 +1,21 @@
-[tool.poetry]
+[project]
 name = "webscrapper"
 version = "0.1.0"
-description = ""
-authors = ["Jack Stockley <34308937+jnstockley@users.noreply.github.com>"]
+description = "Web Scrapper"
+authors = [
+    {name = "Jack Stockley", email = "jack@jstockley.com"}
+]
 readme = "README.md"
 package-mode = false
-
-[tool.poetry.dependencies]
-python = "3.13.1"
-beautifulsoup4 = "4.12.3"
-pandas = "2.2.3"
-typing-extensions = "4.12.2"
-python-dotenv = "1.0.1"
-tls-client = "1.0.1"
-
+requires-python = "3.13.1"
+dependencies = [
+    "beautifulsoup4 ==4.12.3",
+    "pandas ==2.2.3",
+    "typing-extensions ==4.12.2",
+    "python-dotenv ==1.0.1",
+    "tls-client ==1.0.1"
+]
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core==2.0.0"]
 build-backend = "poetry.core.masonry.api"
