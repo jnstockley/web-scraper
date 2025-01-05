@@ -8,13 +8,11 @@ RUN pip install --upgrade pip && \
 
 WORKDIR /web-scrapper
 
-COPY poetry.lock /web-scrapper
+COPY  . /web-scrapper/
 
-COPY pyproject.toml /web-scrapper
+RUN poetry check
 
 RUN poetry install
-
-COPY  src /web-scrapper/src
 
 FROM python:3.13.1-slim
 
@@ -32,4 +30,4 @@ ENV PYTHONPATH=/web-scrapper:$PYTHONPATH
 
 HEALTHCHECK --interval=60s --timeout=10s --start-period=20s --retries=3 CMD [ "poetry", "run", "python3", "src/healthcheck.py" ]
 
-ENTRYPOINT ["poetry", "run", "python3", "src/main.py"]
+ENTRYPOINT ["poetry", "run", "python3", "src/webscrapper.py"]
