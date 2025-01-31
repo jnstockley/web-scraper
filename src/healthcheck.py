@@ -4,10 +4,10 @@ from dotenv import load_dotenv
 
 from src.scrappers import generic
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     load_dotenv()
-    sleep_time_sec = int(os.environ['SLEEP_TIME_SEC'])
-    scrapper = os.environ.get('SCRAPPER', '')
+    sleep_time_sec = int(os.environ["SLEEP_TIME_SEC"])
+    scrapper = os.environ.get("SCRAPPER", "")
     match scrapper:
         case "text":
             up_to_date = generic.healthcheck(".text_healthcheck", sleep_time_sec)

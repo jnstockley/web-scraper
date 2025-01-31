@@ -14,4 +14,4 @@ def scrape(url: str, text: str):
 
         send_email_str(f"Found {text} in {url}")
 
-    save_healthcheck_file('.text_healthcheck')
+    save_healthcheck_file(".text_healthcheck")

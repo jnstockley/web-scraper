@@ -1,7 +1,11 @@
 from src import logger
 from src.email_sender import send_email_str
 from src.scrappers import generic
-from src.scrappers.generic import read_data_compressed, save_data_compressed, save_healthcheck_file
+from src.scrappers.generic import (
+    read_data_compressed,
+    save_data_compressed,
+    save_healthcheck_file,
+)
 from difflib import ndiff
 
 
@@ -24,14 +28,15 @@ def scrape(url: str, percentage: float = 10):
         logger.info("Change in data")
         send_email_str(f"Change in data: {data}")
 
-    save_healthcheck_file('.diff_healthcheck')
+    save_healthcheck_file(".diff_healthcheck")
 
 
 def compare(old: str, new: str) -> float:
     diff = list(ndiff(old.splitlines(), new.splitlines()))
-    changes = sum(1 for line in diff if line.startswith('+ ') or line.startswith('- '))
+    changes = sum(1 for line in diff if line.startswith("+ ") or line.startswith("- "))
     total_lines = max(len(old.splitlines()), len(new.splitlines()))
     difference_percentage = (changes / total_lines) * 100 if total_lines > 0 else 0
-    logger.debug(f"Changes: {changes}, Total lines: {total_lines}, Difference percentage: {difference_percentage}")
+    logger.debug(
+        f"Changes: {changes}, Total lines: {total_lines}, Difference percentage: {difference_percentage}"
+    )
     return difference_percentage
-
