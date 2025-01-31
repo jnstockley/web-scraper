@@ -10,9 +10,9 @@ WORKDIR /web-scrapper
 
 COPY  . /web-scrapper/
 
-RUN poetry check
-
-RUN poetry install
+RUN poetry lock && \
+    poetry check && \
+    poetry install --without=dev
 
 FROM python:3.13.1-slim
 
