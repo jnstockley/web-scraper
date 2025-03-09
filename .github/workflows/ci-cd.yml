@@ -109,7 +109,7 @@ jobs:
             ghcr.io/${{ github.event.repository.name }}
           tags: |
             testing
-            testing-$(date +'%Y%m%d%H%M%S')
+            $(date +'%Y%m%d%H%M%S')-testing
 
       - name: Update version in pyproject.toml
         if: github.event_name == 'release'
@@ -124,8 +124,8 @@ jobs:
         if: github.ref_name == 'main'
         run: |
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
-          VERSION="testing-$(date +'%Y%m%d%H%M%S')"
-          sed -i '' "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+          VERSION="$(date +'%Y%m%d%H%M%S')-testing"
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
           cat pyproject.toml | grep "version ="
 
       - name: Get repository description
