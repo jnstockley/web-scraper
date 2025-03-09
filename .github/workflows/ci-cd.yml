@@ -1,3 +1,4 @@
+---
 name: Lint, Test, and Deploy
 
 on:
@@ -98,6 +99,10 @@ jobs:
             ${{ github.event.release.tag_name }}
 
       - name: Create testing version tag
+        if: github.event_name == 'release'
+        run: echo "VERSION=${{ github.event.release.tag_name }}#v" >> "$GITHUB_ENV"
+
+      - name: Create testing version tag for main branch
         if: github.ref_name == 'main'
         run: echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
 
@@ -114,21 +119,10 @@ jobs:
             ${{ env.VERSION }}
 
       - name: Update version in pyproject.toml
-        if: github.event_name == 'release'
         run: |
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
-          VERSION="${{ github.event.release.tag_name }}"
-          VERSION="${VERSION#v}"  # Remove leading 'v' if present
+          VERSION=${{ env.VERSION }}
           sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
-          cat pyproject.toml | grep "version ="
-
-      - name: Update version in pyproject.toml
-        if: github.ref_name == 'main'
-        run: |
-          # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
-          VERSION="$(date +'%Y%m%d%H%M%S').dev"
-          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
-          cat pyproject.toml | grep "version ="
 
       - name: Get repository description
         id: get-repo-description
@@ -152,6 +146,19 @@ jobs:
           repository: ${{ github.event.repository.name }}
           short-description: ${{ steps.get-repo-description.outputs.result }}
 
+      - name: Generate RFC 3339 datetime
+        id: generate-datetime
+        run: |
+          RFC3339_DATETIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          echo "RFC3339_DATETIME=$RFC3339_DATETIME" >> $GITHUB_ENV
+
+      - name: Extract base image digest
+        id: baseimage
+        run: |
+          BASE_IMAGE=$(grep -m 1 "^FROM" Dockerfile | sed 's/FROM //')
+          BASE_DIGEST=$(docker pull $BASE_IMAGE 2>/dev/null | grep -m 1 "Digest:" | sed 's/Digest: //')
+          echo "BASE_DIGEST=$BASE_DIGEST" >> $GITHUB_ENV
+          echo "BASE_IMAGE=$BASE_IMAGE" >> $GITHUB_ENV
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v6
@@ -161,4 +168,18 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.release.outputs.tags || steps.testing.outputs.tags }}
-          labels: ${{ steps.release.outputs.labels || steps.testing.outputs.labels }}
+          labels: |
+            org.opencontainers.image.created=${{ env.RFC3339_DATETIME }}
+            org.opencontainers.image.authors=${{ github.actor }}
+            org.opencontainers.image.url=https://github.com/${{ github.actor }}/${{ github.event.repository.name }}
+            org.opencontainers.image.documentation=https://github.com/${{ github.actor }}/${{ github.event.repository.name }}
+            org.opencontainers.image.source=https://github.com/${{ github.actor }}/${{ github.event.repository.name }}
+            org.opencontainers.image.version=${{ env.VERSION }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.vendor=${{ github.actor }}
+            org.opencontainers.image.licenses=Apache-2.0
+            org.opencontainers.image.ref.name=${{ github.ref_name }}
+            org.opencontainers.image.title=${{ github.event.repository.name }}
+            org.opencontainers.image.description=${{ steps.get-repo-description.outputs.result }}
+            org.opencontainers.image.base.digest=${{ env.BASE_DIGEST }}
+            org.opencontainers.image.base.name=${{ env.BASE_IMAGE }}
