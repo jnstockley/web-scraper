@@ -167,6 +167,21 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.release.outputs.tags || steps.testing.outputs.tags }}
+          annotations: |
+            org.opencontainers.image.created=${{ env.RFC3339_DATETIME }}
+            org.opencontainers.image.authors=${{ github.actor }}
+            org.opencontainers.image.url=https://github.com/${{ github.actor }}/${{ github.event.repository.name }}
+            org.opencontainers.image.documentation=https://github.com/${{ github.actor }}/${{ github.event.repository.name }}
+            org.opencontainers.image.source=https://github.com/${{ github.actor }}/${{ github.event.repository.name }}
+            org.opencontainers.image.version=${{ env.VERSION }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.vendor=${{ github.actor }}
+            org.opencontainers.image.licenses=Apache-2.0
+            org.opencontainers.image.ref.name=${{ github.ref_name }}
+            org.opencontainers.image.title=${{ github.event.repository.name }}
+            org.opencontainers.image.description=${{ steps.get-repo-description.outputs.result }}
+            org.opencontainers.image.base.digest=${{ env.BASE_DIGEST }}
+            org.opencontainers.image.base.name=${{ env.BASE_IMAGE }}
           labels: |
             org.opencontainers.image.created=${{ env.RFC3339_DATETIME }}
             org.opencontainers.image.authors=${{ github.actor }}
