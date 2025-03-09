@@ -125,7 +125,7 @@ jobs:
         run: |
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
           VERSION="testing-$(date +'%Y%m%d%H%M%S')"
-          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+          sed -i '' "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
           cat pyproject.toml | grep "version ="
 
       - name: Get repository description
