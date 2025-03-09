@@ -156,7 +156,7 @@ jobs:
         if: github.event_name == 'release' || github.ref_name == 'main'
         with:
           context: .
-          platforms: linux/386,linux/amd64,linux/arm64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.release.outputs.tags || steps.testing.outputs.tags }}
           labels: ${{ steps.release.outputs.labels || steps.testing.outputs.labels }}
