@@ -13,6 +13,7 @@ on:
       - main.py
       - pyproject.toml
       - uv.lock
+      - .github/workflows/**.yml
 
 jobs:
   lint:
