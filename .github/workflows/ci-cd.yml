@@ -52,12 +52,12 @@ jobs:
         run: |
           uvx pytest tests
 
-  push_to_registries:
-    if: github.event_name == 'release' || github.base_ref == 'main'
+  deploy_docker_image:
+    if: github.event_name == 'release' || github.ref == 'refs/heads/main'
     needs:
       - lint
       - test
-    name: Push Docker image to multiple registries
+    name: Deploy Docker Image
     runs-on: ubuntu-latest
     permissions:
       packages: write
