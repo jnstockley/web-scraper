@@ -91,8 +91,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ github.event.repository.name }}
-            ghcr.io/${{ github.event.repository.name }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
+            ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}
           tags: |
             latest
             ${{ github.event.release.tag_name }}
@@ -107,8 +107,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ github.event.repository.name }}
-            ghcr.io/${{ github.event.repository.name }}
+            ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
+            ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}
           tags: |
             testing
             ${{ env.VERSION }}
