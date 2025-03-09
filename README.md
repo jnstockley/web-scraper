@@ -10,4 +10,3 @@
 5. Update `assignees` in `renovate.json` with your GitHub username
 6. Set up code-cove and make sure it has access to this repository
    - https://docs.codecov.com/docs/quick-start
-
