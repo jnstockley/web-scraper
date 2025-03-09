@@ -8,3 +8,5 @@
    - DOCKER_PASSWORD (Docker Hub PAT)
 4. Create a Docker Hub repository with the same name as the GitHub repository
 5. Update `assignees` in `renovate.json` with your GitHub username
+6. Set up code-cove and make sure it has access to this repository
+   - https://docs.codecov.com/docs/quick-start

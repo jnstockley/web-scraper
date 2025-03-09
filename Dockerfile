@@ -6,4 +6,4 @@ WORKDIR /app
 
 RUN uv sync --frozen --no-dev
 
-ENTRYPOINT ["uv", "run", "main.py"]
+ENTRYPOINT ["uv", "run", "--directory", "src", "main.py"]

@@ -11,7 +11,7 @@ on:
     paths:
       - Dockerfile
       - src/**
-      - main.py
+      - ../../src/main.py
       - pyproject.toml
       - uv.lock
       - .github/workflows/**.yml
@@ -51,7 +51,7 @@ jobs:
         run: uv sync --frozen
       - name: Step 5 - Run Tests
         run: |
-          uv run pytest --cov . --cov-branch --cov-report=xml
+          uv run pytest --cov src --cov-branch --cov-report=xml
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:

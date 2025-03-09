@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 # Run Tests
-uvx pytest tests
+uv run pytest --cov src --cov-branch --cov-report=xml
