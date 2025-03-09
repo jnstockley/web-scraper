@@ -110,7 +110,7 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
             ghcr.io/${{ github.actor }}/${{ github.event.repository.name }}
           tags: |
-            testing
+            dev
             ${{ env.VERSION }}
 
       - name: Update version in pyproject.toml
@@ -162,4 +162,3 @@ jobs:
           push: true
           tags: ${{ steps.release.outputs.tags || steps.testing.outputs.tags }}
           labels: ${{ steps.release.outputs.labels || steps.testing.outputs.labels }}
-
