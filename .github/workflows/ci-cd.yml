@@ -51,7 +51,7 @@ jobs:
         run: uv sync --frozen
       - name: Step 5 - Run Tests
         run: |
-          pytest --cov tests
+          uv run pytest --cov tests
 
   deploy_docker_image:
     if: github.event_name == 'release' || github.ref_name == 'main'
