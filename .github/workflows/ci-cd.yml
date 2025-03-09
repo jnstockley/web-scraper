@@ -52,7 +52,11 @@ jobs:
       - name: Step 5 - Run Tests
         run: |
           uv run pytest --cov --junitxml=junit.xml -o junit_family=legacy
-      - name: Step 6 - Upload test results to Codecov
+      - name: Step 6 - Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Step 7 - Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
         with:
