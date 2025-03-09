@@ -85,8 +85,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-
-
       - name: Extract metadata
         id: release
         if: github.event_name == 'release'
@@ -99,6 +97,10 @@ jobs:
             latest
             ${{ github.event.release.tag_name }}
 
+      - name: Create testing version tag
+        if: github.ref_name == 'main'
+        run: echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
+
       - name: Extract metadata for main branch
         id: testing
         if: github.ref_name == 'main'
@@ -109,7 +111,7 @@ jobs:
             ghcr.io/${{ github.event.repository.name }}
           tags: |
             testing
-            $(date +'%Y%m%d%H%M%S')-dev
+            $VERSION
 
       - name: Update version in pyproject.toml
         if: github.event_name == 'release'
