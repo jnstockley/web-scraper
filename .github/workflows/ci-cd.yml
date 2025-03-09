@@ -53,7 +53,7 @@ jobs:
           uvx pytest tests
 
   deploy_docker_image:
-    if: github.event_name == 'release' || github.ref == 'refs/heads/main'
+    if: github.event_name == 'release' || GITHUB_HEAD_REF == 'main' || GITHUB_BASE_REF == 'main'
     needs:
       - lint
       - test
@@ -101,7 +101,7 @@ jobs:
 
       - name: Extract metadata for main branch
         id: testing
-        if: github.base_ref == 'main'
+        if: GITHUB_HEAD_REF == 'main' || GITHUB_BASE_REF == 'main'
         uses: docker/metadata-action@v5
         with:
           images: |
@@ -120,7 +120,7 @@ jobs:
           cat pyproject.toml | grep "version ="
 
       - name: Update version in pyproject.toml
-        if: github.base_ref == 'main'
+        if: GITHUB_HEAD_REF == 'main' || GITHUB_BASE_REF == 'main'
         run: |
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
           VERSION="testing-$(date +'%Y%m%d%H%M%S')"
