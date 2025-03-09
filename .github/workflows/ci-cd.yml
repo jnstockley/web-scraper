@@ -111,7 +111,7 @@ jobs:
             ghcr.io/${{ github.event.repository.name }}
           tags: |
             testing
-            ${{VERSION}}
+            ${{ env.VERSION }}
 
       - name: Update version in pyproject.toml
         if: github.event_name == 'release'
