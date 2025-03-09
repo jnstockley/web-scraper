@@ -109,7 +109,6 @@ jobs:
             ghcr.io/${{ github.event.repository.name }}
           tags: |
             testing
-            testing-$(date +'%Y%m%d%H%M%S')
 
       - name: Update version in pyproject.toml
         if: github.event_name == 'release'
