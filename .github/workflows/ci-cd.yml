@@ -51,7 +51,7 @@ jobs:
         run: uv sync --frozen
       - name: Step 5 - Run Tests
         run: |
-          uv run pytest --cov src --cov-branch --cov-report=xml
+          pytest --cov --junitxml=junit.xml -o junit_family=legacy
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
