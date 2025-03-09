@@ -10,3 +10,12 @@
 5. Update `assignees` in `renovate.json` with your GitHub username
 6. Set up code-cove and make sure it has access to this repository
    - https://docs.codecov.com/docs/quick-start
+7. Setup branch protection rules
+   - Set `Enrforcment Status` to `Enabled`
+   - Make sure `Target branches` set to `main` or default branch
+   - Ensure these `Branch rules` are selected
+     - `Restrict deletions`
+     - `Require status checks to pass` with these checks
+       - `Lint`
+       - `Test`
+     - `Block force pushes`
