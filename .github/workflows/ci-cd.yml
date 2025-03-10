@@ -119,9 +119,9 @@ jobs:
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          username: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
+        #with:
+        #  username: __token__
+        #  password: ${{ secrets.PYPI_TOKEN }}
 
   deploy_docker_image:
     if: github.event_name == 'release' || github.ref_name == 'main'
