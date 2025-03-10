@@ -86,9 +86,6 @@ jobs:
       - name: Step 4 - Install Packages
         run: uv sync --frozen
 
-      - name: Build package
-        run: uv build
-
       - name: Create testing version tag
         if: github.event_name == 'release'
         run: echo "VERSION=${{ github.event.release.tag_name }}#v" >> "$GITHUB_ENV"
@@ -102,6 +99,9 @@ jobs:
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
           VERSION=${{ env.VERSION }}
           sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+
+      - name: Build package
+        run: uv build
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
