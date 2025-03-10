@@ -19,3 +19,7 @@
        - `Lint`
        - `Test`
      - `Block force pushes`
+8. Create a PyPi `Trusted Publisher`
+   - https://pypi.org/manage/account/publishing/
+9. Generate a PyPi API token and save to GitHub secrets with name `PYPI_TOKEN`
+   - https://pypi.org/manage/account/

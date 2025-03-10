@@ -62,6 +62,42 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
+  pypi-publish:
+    if: github.event_name == 'release' || github.ref_name == 'main'
+    needs:
+      - lint
+      - test
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+      # Specifying a GitHub environment is optional, but strongly encouraged
+    environment: pypi
+    permissions:
+        # IMPORTANT: this permission is mandatory for Trusted Publishing
+        id-token: write
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Create testing version tag
+        if: github.event_name == 'release'
+        run: echo "VERSION=${{ github.event.release.tag_name }}#v" >> "$GITHUB_ENV"
+
+      - name: Create testing version tag for main branch
+        if: github.ref_name == 'main'
+        run: echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
+
+      - name: Update version in pyproject.toml
+        run: |
+          # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
+          VERSION=${{ env.VERSION }}
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          username: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
+
   deploy_docker_image:
     if: github.event_name == 'release' || github.ref_name == 'main'
     needs:
