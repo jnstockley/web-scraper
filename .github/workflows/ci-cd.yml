@@ -94,11 +94,25 @@ jobs:
         if: github.ref_name == 'main'
         run: echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
 
+      - name: Get repository description
+        id: get-repo-description
+        uses: actions/github-script@v7.0.1
+        with:
+          script: |
+            const repo = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            return repo.data.description;
+          result-encoding: string
+
       - name: Update version in pyproject.toml
         run: |
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
           VERSION=${{ env.VERSION }}
+          DESCRIPTION=${{ steps.get-repo-description.outputs.result }}
           sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+          sed -i "s/^description = \".*\"/description = \"DESCRIPTION\"/" pyproject.toml
 
       - name: Build package
         run: uv build
