@@ -14,7 +14,7 @@ on:
       - ../../src/main.py
       - pyproject.toml
       - uv.lock
-      - .github/workflows/**.yml
+      - .github/workflows/*.yml
 
 jobs:
   lint:
