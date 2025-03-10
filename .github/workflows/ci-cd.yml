@@ -111,8 +111,8 @@ jobs:
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
           VERSION=${{ env.VERSION }}
           DESCRIPTION="${{ steps.get-repo-description.outputs.result }}"
-          sed -i '' "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
-          sed -i '' "s/^description = \".*\"/description = \"$DESCRIPTION\"/" pyproject.toml
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+          sed -i "s/^description = \".*\"/description = \"$DESCRIPTION\"/" pyproject.toml
 
       - name: Build package
         run: uv build
@@ -192,7 +192,7 @@ jobs:
         run: |
           # Replace version in pyproject.toml with the release tag (without 'v' prefix if present)
           VERSION=${{ env.VERSION }}
-          sed -i '' "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
 
       - name: Get repository description
         id: get-repo-description
