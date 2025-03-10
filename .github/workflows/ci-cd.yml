@@ -14,7 +14,7 @@ on:
       - ../../src/main.py
       - pyproject.toml
       - uv.lock
-      - .github/workflows/*.yml
+      - .github/workflows/**.yml
 
 jobs:
   lint:
@@ -67,7 +67,7 @@ jobs:
     needs:
       - lint
       - test
-    name: upload release to PyPI
+    name: Publish to PyPI
     runs-on: ubuntu-latest
       # Specifying a GitHub environment is optional, but strongly encouraged
     environment: pypi
@@ -95,8 +95,8 @@ jobs:
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          - username: __token__
-          - password: ${{ secrets.PYPI_TOKEN }}
+          username: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
 
   deploy_docker_image:
     if: github.event_name == 'release' || github.ref_name == 'main'
