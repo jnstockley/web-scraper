@@ -1,4 +1,4 @@
-# Python Starter
+# JS Python Starter
 
 ## Steps to set up
 1. Create a new repository in GitHub using this repository as a template
