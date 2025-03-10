@@ -69,14 +69,25 @@ jobs:
       - test
     name: Publish to PyPI
     runs-on: ubuntu-latest
-      # Specifying a GitHub environment is optional, but strongly encouraged
     environment: pypi
     permissions:
-        # IMPORTANT: this permission is mandatory for Trusted Publishing
         id-token: write
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+
+      - name: Step 2 - Setup Python
+        uses: actions/setup-python@v5
+        with:
+          check-latest: true
+      - name: Step 3 - Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Step 4 - Install Packages
+        run: uv sync --frozen
+
+      - name: Build package
+        run: uv build
 
       - name: Create testing version tag
         if: github.event_name == 'release'
