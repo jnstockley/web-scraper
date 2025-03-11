@@ -22,3 +22,8 @@
 8. Create a PyPi `Trusted Publisher`
    - https://pypi.org/manage/account/publishing/
 9. Ensure the name in `pyproject.toml` matches the name of the package on PyPi
+10. Make sure the following linters are installed externally of the project
+    - yamllint
+    - shellcheck
+    - shfmt
+    - node (npx/dclint)
