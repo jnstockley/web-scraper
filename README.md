@@ -21,6 +21,9 @@
      - `Block force pushes`
 8. Create a PyPi `Trusted Publisher`
    - https://pypi.org/manage/account/publishing/
-9. Generate a PyPi API token and save to GitHub secrets with name `PYPI_TOKEN`
-   - https://pypi.org/manage/account/
-10. Ensure the name in `pyproject.toml` matches the name of the package on PyPi
+9. Ensure the name in `pyproject.toml` matches the name of the package on PyPi
+10. Make sure the following linters are installed externally of the project
+    - yamllint
+    - shellcheck
+    - shfmt
+    - node (npx/dclint)
