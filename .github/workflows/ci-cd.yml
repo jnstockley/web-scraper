@@ -139,6 +139,7 @@ jobs:
       - test
     name: Deploy Docker Image
     runs-on: ubuntu-latest
+    environment: docker
     permissions:
       packages: write
       contents: read
