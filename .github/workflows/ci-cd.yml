@@ -11,7 +11,6 @@ on:
     paths:
       - Dockerfile
       - src/**
-      - ../../src/main.py
       - pyproject.toml
       - uv.lock
       - .github/workflows/**.yml
@@ -198,7 +197,6 @@ jobs:
       - name: Step 7 - Create testing version tag for main branch
         if: github.ref_name == 'main'
         run: echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
-
 
       - name: Step 8 - Update version in pyproject.toml
         run: |
