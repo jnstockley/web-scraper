@@ -3,7 +3,7 @@
 ## Steps to set up
 1. Create a new repository in GitHub using this repository as a template
 2. Generate Docker Hub PAT (Personal Access Token)
-3. Create repository secrets in GitHub repo
+3. Create an Environment in GitHub with the following secrets
    - DOCKER_USERNAME (Docker Hub username)
    - DOCKER_PASSWORD (Docker Hub PAT)
 4. Create a Docker Hub repository with the same name as the GitHub repository
