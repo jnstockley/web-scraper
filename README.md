@@ -30,3 +30,4 @@
 
 ## TODO
 - [ ] Handle GitHub pre-release
+- [ ] Update PYTHONPATH with src folder
