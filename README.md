@@ -27,3 +27,6 @@
     - shellcheck
     - shfmt
     - node (npx/dclint)
+
+## TODO
+- [ ] Handle GitHub pre-release
