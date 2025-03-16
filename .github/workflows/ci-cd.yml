@@ -173,13 +173,11 @@ jobs:
 
       - name: Step 6 - Create testing version tag for main branch
         if: github.ref_name == 'main'
-        run: |
-          echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
-          echo ${{ github.event.release.prerelease }}
+        run: echo "VERSION=$(date +'%Y%m%d%H%M%S').dev" >> "$GITHUB_ENV"
 
       - name: Step 7 - Extract metadata for release
         id: release
-        if: (github.event_name == 'release') && (github.event.release.prerelease == 'false')
+        if: github.event_name == 'release' && !github.event.release.prerelease
         uses: docker/metadata-action@v5
         with:
           images: |
@@ -191,7 +189,7 @@ jobs:
 
       - name: Step 7 - Extract metadata for pre-release
         id: testing
-        if: (github.event_name == 'release') && (github.event.release.prerelease == 'true')
+        if: github.event_name == 'release' && github.event.release.prerelease
         uses: docker/metadata-action@v5
         with:
           images: |
