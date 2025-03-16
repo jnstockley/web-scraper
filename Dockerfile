@@ -4,6 +4,7 @@ ADD . /app
 
 WORKDIR /app
 
-RUN uv sync --frozen --no-dev
+RUN export PYTHONPATH=/app/src:$PYTHONPATH && \
+    uv sync --frozen --no-dev
 
 ENTRYPOINT ["uv", "run", "--directory", "src", "main.py"]
