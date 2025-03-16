@@ -29,5 +29,6 @@
     - node (npx/dclint)
 
 ## TODO
-- [ ] Handle GitHub pre-release
-- [ ] Update PYTHONPATH with src folder
+- [X] Handle GitHub pre-release
+- [X] Update PYTHONPATH with src folder
+- [X] Add custom user to Dockerfile
