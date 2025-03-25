@@ -12,7 +12,7 @@ dependencies = [
     "beautifulsoup4 ==4.13.3",
     "pandas ==2.2.3",
     "typing-extensions ==4.12.2",
-    "python-dotenv ==1.0.1",
+    "python-dotenv ==1.1.0",
     "tls-client ==1.0.1"
 ]
 
