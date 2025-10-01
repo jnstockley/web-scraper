@@ -45,7 +45,9 @@ jobs:
         run: uv sync --frozen
 
       - name: Step 7 - Run Linters
-        run: ./scripts/lint.sh
+        run: |
+          .venv/bin/activate
+          ./scripts/lint.sh
 
   test:
     name: Test
