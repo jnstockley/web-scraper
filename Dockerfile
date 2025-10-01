@@ -15,7 +15,7 @@ COPY . /app
 
 RUN sed -i "s/^version = .*/version = \"${VERSION}\"/" /app/pyproject.toml
 
-RUN uv sync --frozen --no-cache
+RUN uv sync --frozen --no-cache --no-dev
 
 ENV PATH=/app/.venv/bin:$PATH
 ENV PYTHONPATH=src
