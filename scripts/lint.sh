@@ -2,8 +2,8 @@
 IFS=$'\n\t'
 
 # Run Python linter
-uv ruff check
-uv ruff format --check
+uv run ruff check
+uv run ruff format --check
 
 # Run Shell linter, ignoring files in .gitignore
 git ls-files --cached --others --exclude-standard |
