@@ -33,17 +33,13 @@ jobs:
       - name: Step 3 - Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Step 4 - Install uv
-        uses: astral-sh/setup-uv@v6
-
-      - name: Step 5 Install External Linters
+      - name: Step 4 - Install External Linters
         run: |
-          uv tool install yamllint
-          curl -L --fail https://raw.githubusercontent.com/chiefbiiko/shfmt-install/v0.1.0/install.sh -o shfmt-install.sh
-          chmod +x shfmt-install.sh
-          sudo ./shfmt-install.sh /usr/local/bin
-          cat /usr/local/bin/shfmt
-          #curl -L --fail -o /usr/bin/shellcheck "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz"
+          sudo apt-get update
+          sudo apt-get install -y yamllint shellcheck shfmt
+
+      - name: Step 5 - Install uv
+        uses: astral-sh/setup-uv@v6
 
       - name: Step 6 - Install Packages
         run: uv sync --frozen
