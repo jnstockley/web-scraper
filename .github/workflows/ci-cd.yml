@@ -33,18 +33,9 @@ jobs:
       - name: Step 3 - Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Step 4 - Install External Linters
-        run: |
-          brew install shellcheck shfmt
-      
-
-      #- name: Step 4 - Install External Linters
-      #  run: |
-      #    sudo apt-get update
-      #    sudo apt-get install -y yamllint shellcheck shfmt
-
-      - name: Step 5 - Install uv
+      - name: Step 4 - Install uv
         uses: astral-sh/setup-uv@v6
+
       - name: Step 5 Install External Linters
         run: |
           uv tool add yamllint
