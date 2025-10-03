@@ -33,18 +33,32 @@ jobs:
       - name: Step 3 - Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Step 4 - Install External Linters
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y yamllint shellcheck shfmt
+      - name: Step 4 - Restore APT cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/apt/archives
+            ~/.cache/apt/lists
+          key: ${{ runner.os }}-apt-cache-${{ hashFiles('.github/workflows/ci-cd.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-cache-
 
-      - name: Step 5 - Install uv
+      - name: Step 5 - Install External Linters
+        run: |
+          # Create local cache dirs in the runner home so we can cache apt downloads without needing to write into root-owned paths
+          mkdir -p "$HOME/.cache/apt/archives" "$HOME/.cache/apt/lists"
+
+          # Use the local cache dirs for apt operations using apt-get options. This speeds up installs when the cache is restored.
+          sudo apt-get -o Dir::Cache::archives="$HOME/.cache/apt/archives" -o Dir::State::lists="$HOME/.cache/apt/lists" update
+          sudo apt-get -o Dir::Cache::archives="$HOME/.cache/apt/archives" -o Dir::State::lists="$HOME/.cache/apt/lists" install -y yamllint shellcheck shfmt
+
+      - name: Step 6 - Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Step 6 - Install Packages
+      - name: Step 7 - Install Packages
         run: uv sync --frozen
 
-      - name: Step 7 - Run Linters
+      - name: Step 8 - Run Linters
         run: ./scripts/lint.sh
 
   test:
