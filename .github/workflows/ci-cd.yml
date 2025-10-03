@@ -38,7 +38,7 @@ jobs:
 
       - name: Step 5 Install External Linters
         run: |
-          uv tool add yamllint
+          uv tool install yamllint
           $(curl -fsSL https://raw.githubusercontent.com/chiefbiiko/shfmt-install/v0.1.0/install.sh | sh) -d .
           curl -L --fail -o /usr/bin "https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz"
 
