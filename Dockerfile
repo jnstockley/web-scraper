@@ -1,4 +1,4 @@
-FROM python:3.13.7-slim AS  build
+FROM python:3.13.7 AS  build
 
 ARG VERSION=0.0.0.dev
 
