@@ -63,7 +63,7 @@ wheels = [
 ]
 
 [[package]]
-name = "js-python-starter"
+name = "js-web-scraper"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
