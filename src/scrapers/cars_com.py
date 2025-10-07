@@ -7,8 +7,8 @@ from pandas import DataFrame
 
 from src import logger
 from src.email_sender import send_email
-from src.scrappers import generic
-from src.scrappers.generic import save_data_csv, save_healthcheck_file
+from src.scrapers import generic
+from src.scrapers.generic import save_data_csv, save_healthcheck_file
 
 
 @dataclass

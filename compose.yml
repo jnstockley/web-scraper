@@ -1,15 +1,18 @@
+# dclint disable service-image-require-explicit-tag
+---
+name: Web Scraper
 services:
-  web-scrapper:
-    container_name: web_scrapper
-    image: jnstockley/web-scrapper:latest
+  web-scraper:
+    container_name: web_scraper
+    image: jnstockley/web-scraper:latest
     env_file:
       - .env
-    restart: always
+    restart: unless-stopped
     volumes:
-      - ./data/:/web-scrapper/data/
+      - ./data/:/app/data/
     healthcheck:
-      test: poetry run python3 src/healthcheck.py
+      test: python src/healthcheck.py || exit 1
       interval: 60s
-      retries: 3
+      retries: 5
       start_period: 20s
       timeout: 10s

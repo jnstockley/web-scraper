@@ -1,33 +1,32 @@
-FROM python:3.13.7-slim AS build
+FROM python:3.13.7-slim AS  build
 
-COPY requirements.txt .
+ARG VERSION=0.0.0.dev
 
-RUN pip install --upgrade pip && \
-    pip install -r requirements.txt && \
-    mkdir /web-scrapper
+WORKDIR /app
 
-WORKDIR /web-scrapper
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-COPY  . /web-scrapper/
+COPY ./pyproject.toml .
+COPY ./uv.lock .
 
-RUN poetry lock && \
-    poetry check && \
-    poetry install --without=dev
+RUN uv version ${VERSION} && \
+    uv sync --frozen --no-cache --no-dev
 
 FROM python:3.13.7-slim
 
-COPY --from=build /usr/local/ /usr/local/
+RUN adduser app
 
-COPY --from=build /root/.cache/pypoetry/virtualenvs  /root/.cache/pypoetry/virtualenvs
+USER app
 
-COPY --from=build /web-scrapper /web-scrapper
+WORKDIR /app
 
-WORKDIR /web-scrapper
+COPY . .
+COPY --from=build /app/.venv .venv
+COPY --from=build /app/pyproject.toml .
+COPY --from=build /app/uv.lock .
 
-ENV PATH="/root/.local/bin:${PATH}"
+# Set up environment variables for production
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH=/app/src/:$PYTHONPATH
 
-ENV PYTHONPATH=/web-scrapper:$PYTHONPATH
-
-HEALTHCHECK --interval=60s --timeout=10s --start-period=20s --retries=3 CMD [ "poetry", "run", "python3", "src/healthcheck.py" ]
-
-ENTRYPOINT ["poetry", "run", "python3", "src/webscrapper.py"]
+ENTRYPOINT ["python", "src/main.py"]
