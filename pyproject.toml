@@ -1,25 +1,19 @@
 [project]
-name = "webscrapper"
+name = "js-python-starter"
 version = "0.1.0"
-description = "Web Scrapper"
-authors = [
-    {name = "Jack Stockley", email = "jack@jstockley.com"}
-]
+description = "Add your description here"
 readme = "README.md"
-package-mode = false
-requires-python = ">=3.13"
+requires-python = ">=3.13, <4.0"
 dependencies = [
-    "beautifulsoup4 ==4.14.2",
-    "pandas ==2.3.3",
-    "typing-extensions ==4.15.0",
-    "python-dotenv ==1.1.1",
-    "tls-client ==1.0.1"
+    "beautifulsoup4>=4.14.2",
+    "pandas>=2.3.3",
+    "python-dotenv>=1.1.1",
+    "tls-client>=1.0.1",
 ]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "==0.13.3"
-
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-cov>=6.0.0",
+    "ruff>=0.13.2",
+]
