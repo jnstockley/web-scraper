@@ -1,7 +1,7 @@
 from src import logger
 from src.email_sender import send_email_str
-from src.scrappers import generic
-from src.scrappers.generic import save_healthcheck_file
+from src.scrapers import generic
+from src.scrapers.generic import save_healthcheck_file
 
 
 def scrape(url: str, text: str):
