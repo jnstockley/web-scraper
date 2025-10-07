@@ -1,10 +1,10 @@
 # dclint disable service-image-require-explicit-tag
 ---
-name: Web Scrapper
+name: Web Scraper
 services:
-  web-scrapper:
-    container_name: web_scrapper
-    image: jnstockley/web-scrapper:latest
+  web-scraper:
+    container_name: web_scraper
+    image: jnstockley/web-scraper:latest
     env_file:
       - .env
     restart: unless-stopped

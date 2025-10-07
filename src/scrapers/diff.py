@@ -1,7 +1,7 @@
 from src import logger
 from src.email_sender import send_email_str
-from src.scrappers import generic
-from src.scrappers.generic import (
+from src.scrapers import generic
+from src.scrapers.generic import (
     read_data_compressed,
     save_data_compressed,
     save_healthcheck_file,

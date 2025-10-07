@@ -1,11 +1,11 @@
 ---
-name: Web Scrapper (Dev)
+name: Web Scraper (Dev)
 services:
-  web-scrapper:
+  web-scraper:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: web_scrapper_dev
+    container_name: web_scraper_dev
     env_file:
       - .env
     # Add ports if needed
