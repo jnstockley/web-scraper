@@ -34,7 +34,8 @@ jobs:
         uses: aquasecurity/trivy-action@0.33.1
         with:
           image-ref: '${{ github.actor }}/${{ github.event.repository.name }}:latest'
-          format: 'sarif'
+          format: 'template'
+          template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
 
