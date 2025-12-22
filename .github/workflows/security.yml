@@ -36,7 +36,7 @@ jobs:
         id: dockerfile_check
         run: |
           if [ -f "Dockerfile" ]; then
-            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "exists=true" >> $GITHUB_OUTPUT
           else
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
