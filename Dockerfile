@@ -21,7 +21,8 @@ FROM dhi.io/python:3.13.11
 # Set up environment variables for production
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV PATH="/app/venv/bin:$PATH"
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH=/app/src/:$PYTHONPATH
 
 WORKDIR /app
 
