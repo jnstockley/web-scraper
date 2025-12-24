@@ -17,7 +17,7 @@ COPY ./uv.lock .
 RUN uv version ${VERSION} && \
     uv sync --frozen --no-cache --no-dev
 
-FROM dhi.io/python:3.14.2 AS  build
+FROM dhi.io/python:3.14.2
 
 # Set up environment variables for production
 ENV PYTHONDONTWRITEBYTECODE=1
