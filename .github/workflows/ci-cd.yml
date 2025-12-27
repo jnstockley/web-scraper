@@ -271,7 +271,7 @@ jobs:
             org.opencontainers.image.version=${{ env.VERSION }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.vendor=${{ github.actor }}
-            org.opencontainers.image.licenses=Apache-2.0
+            org.opencontainers.image.licenses=GPL-3.0-or-later
             org.opencontainers.image.ref.name=${{ github.ref_name }}
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ steps.get-repo-description.outputs.result }}
@@ -286,7 +286,7 @@ jobs:
             org.opencontainers.image.version=${{ env.VERSION }}
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.vendor=${{ github.actor }}
-            org.opencontainers.image.licenses=Apache-2.0
+            org.opencontainers.image.licenses=GPL-3.0-or-later
             org.opencontainers.image.ref.name=${{ github.ref_name }}
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ steps.get-repo-description.outputs.result }}
