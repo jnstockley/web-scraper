@@ -4,10 +4,23 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13, <4.0"
-dependencies = [
-    "python-dotenv>=1.2.1",
+license = { file = "LICENSE" }
+authors = [
+    { name = "Jack Stockley", email = "jack@jstockley.com"}
 ]
+keywords = ["starter", "template", "python"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+]
+[project.urls]
+Homepage = "https://github.com/jnstockley/python-starter"
+Repository = "https://github.com/jnstockley/python-starter.git"
+Issues = "https://github.com/jnstockley/python-starter/issues"
 
+dependencies = [
+    "python-dotenv==1.2.1",
+]
 [dependency-groups]
 dev = [
     "pytest>=8.3.5",
