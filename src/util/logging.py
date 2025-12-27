@@ -21,7 +21,9 @@ console_handler = logging.StreamHandler()
 console_handler.setLevel(log_level)
 
 # Create formatter and add it to the handlers
-formatter = logging.Formatter("%(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(levelname)s - %(message)s")
+formatter = logging.Formatter(
+    "%(asctime)s - %(filename)s:%(funcName)s:%(lineno)d - %(levelname)s - %(message)s"
+)
 file_handler.setFormatter(formatter)
 console_handler.setFormatter(formatter)
 
