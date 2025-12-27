@@ -132,12 +132,6 @@ jobs:
           AUTHOR_NAME="${{ github.actor }}"
           AUTHOR_EMAIL="${{ github.actor }}@users.noreply.github.com"
 
-          echo $REPO_URL
-          echo $REPO_GIT_URL
-          echo $ISSUES_URL
-          echo $AUTHOR_NAME
-          echo $AUTHOR_EMAIL
-
           sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
           sed -i "s/^description = \".*\"/description = \"$DESCRIPTION\"/" pyproject.toml
           sed -i "s|^Homepage = \".*\"|Homepage = \"$REPO_URL\"|" pyproject.toml
