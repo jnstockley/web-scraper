@@ -1,5 +1,4 @@
 import sys
-import time
 
 from dotenv import load_dotenv
 
@@ -16,5 +15,4 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "healthcheck":
         healthcheck()
     else:
-        time.sleep(500)
         main()
