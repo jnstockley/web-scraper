@@ -67,10 +67,14 @@ name = "js-web-scraper"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+<<<<<<< HEAD
     { name = "beautifulsoup4" },
     { name = "pandas" },
     { name = "python-dotenv" },
     { name = "tls-client" },
+=======
+    { name = "python-dotenv" },
+>>>>>>> external/main
 ]
 
 [package.dev-dependencies]
@@ -81,12 +85,16 @@ dev = [
 ]
 
 [package.metadata]
+<<<<<<< HEAD
 requires-dist = [
     { name = "beautifulsoup4", specifier = "==4.14.3" },
     { name = "pandas", specifier = "==2.3.3" },
     { name = "python-dotenv", specifier = "==1.2.1" },
     { name = "tls-client", specifier = "==1.0.1" },
 ]
+=======
+requires-dist = [{ name = "python-dotenv", specifier = "==1.2.1" }]
+>>>>>>> external/main
 
 [package.metadata.requires-dev]
 dev = [
@@ -234,6 +242,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "python-dateutil"
 version = "2.9.0.post0"
 source = { registry = "https://pypi.org/simple" }
@@ -246,6 +255,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> external/main
 name = "python-dotenv"
 version = "1.2.1"
 source = { registry = "https://pypi.org/simple" }
@@ -255,6 +266,7 @@ wheels = [
 ]
 
 [[package]]
+<<<<<<< HEAD
 name = "pytz"
 version = "2025.2"
 source = { registry = "https://pypi.org/simple" }
@@ -264,6 +276,8 @@ wheels = [
 ]
 
 [[package]]
+=======
+>>>>>>> external/main
 name = "ruff"
 version = "0.13.2"
 source = { registry = "https://pypi.org/simple" }

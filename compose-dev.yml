@@ -11,7 +11,10 @@ services:
     # Add ports if needed
     # ports:
     #   - '0.0.0.0:5001:5000'
+    volumes:
+      - ./logs:/app/logs
     restart: unless-stopped
+<<<<<<< HEAD
     volumes:
       - ./data/:/app/data/
     # Add healthcheck if needed
@@ -21,6 +24,8 @@ services:
       retries: 5
       start_period: 20s
       timeout: 10s
+=======
+>>>>>>> external/main
     develop:
       watch:
         - action: rebuild
