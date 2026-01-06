@@ -1,12 +1,15 @@
 import time
 import os
+import sys
+
 from dotenv import load_dotenv
 
-from src import logger
 from src.scrapers import text, diff, cars_com
+from util.healthcheck import healthcheck
+from util.logging import logger
 
-if __name__ == "__main__":
-    load_dotenv()
+
+def main():
     sleep_time_sec = int(os.environ["SLEEP_TIME_SEC"])
     logger.info("Starting WebScraper")
     scraper = os.environ.get("SCRAPER", "")
@@ -32,3 +35,11 @@ if __name__ == "__main__":
                 break
         logger.info(f"Sleeping for {sleep_time_sec} seconds")
         time.sleep(sleep_time_sec)
+
+
+if __name__ == "__main__":
+    load_dotenv()
+    if len(sys.argv) > 1 and sys.argv[1] == "healthcheck":
+        healthcheck()
+    else:
+        main()
