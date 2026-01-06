@@ -11,9 +11,10 @@ services:
     # Add ports if needed
     # ports:
     #   - '0.0.0.0:5001:5000'
-    restart: unless-stopped
     volumes:
       - ./data/:/app/data/
+      - ./logs:/app/logs
+    restart: unless-stopped
     # Add healthcheck if needed
     healthcheck:
       test: python src/healthcheck.py || exit 1

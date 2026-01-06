@@ -7,7 +7,7 @@ import pandas as pd
 import tls_client
 from typing_extensions import Optional, Union
 
-from src import logger
+from src.util.logging import logger
 
 
 def create_tls_session(proxy: str = None) -> tls_client.Session:

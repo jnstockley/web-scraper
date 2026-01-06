@@ -7,9 +7,10 @@ services:
     image: jnstockley/web-scraper:latest
     env_file:
       - .env
-    restart: unless-stopped
     volumes:
+      - ./logs:/app/logs
       - ./data/:/app/data/
+    restart: unless-stopped
     healthcheck:
       test: python src/healthcheck.py || exit 1
       interval: 60s

@@ -1,4 +1,3 @@
-from src import logger
 from src.email_sender import send_email_str
 from src.scrapers import generic
 from src.scrapers.generic import (
@@ -7,6 +6,8 @@ from src.scrapers.generic import (
     save_healthcheck_file,
 )
 from difflib import ndiff
+
+from src.util.logging import logger
 
 
 def scrape(url: str, percentage: float = 10):
