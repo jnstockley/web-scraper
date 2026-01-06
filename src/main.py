@@ -1,26 +1,15 @@
-<<<<<<< HEAD
 import time
 import os
-from dotenv import load_dotenv
-=======
 import sys
 
 from dotenv import load_dotenv
 
+from src.scrapers import text, diff, cars_com
 from util.healthcheck import healthcheck
 from util.logging import logger
 
 
 def main():
-    logger.info("Hello from python-starter!")
->>>>>>> external/main
-
-from src import logger
-from src.scrapers import text, diff, cars_com
-
-if __name__ == "__main__":
-    load_dotenv()
-<<<<<<< HEAD
     sleep_time_sec = int(os.environ["SLEEP_TIME_SEC"])
     logger.info("Starting WebScraper")
     scraper = os.environ.get("SCRAPER", "")
@@ -46,9 +35,11 @@ if __name__ == "__main__":
                 break
         logger.info(f"Sleeping for {sleep_time_sec} seconds")
         time.sleep(sleep_time_sec)
-=======
+
+
+if __name__ == "__main__":
+    load_dotenv()
     if len(sys.argv) > 1 and sys.argv[1] == "healthcheck":
         healthcheck()
     else:
         main()
->>>>>>> external/main
