@@ -121,12 +121,16 @@ dev = [
 ]
 
 [package.metadata]
+<<<<<<< HEAD
 requires-dist = [
     { name = "beautifulsoup4", specifier = "==4.14.3" },
     { name = "pandas", specifier = "==3.0.1" },
     { name = "python-dotenv", specifier = "==1.2.2" },
     { name = "tls-client", specifier = "==1.0.1" },
 ]
+=======
+requires-dist = [{ name = "python-dotenv", specifier = "==1.2.2" }]
+>>>>>>> external/main
 
 [package.metadata.requires-dev]
 dev = [
