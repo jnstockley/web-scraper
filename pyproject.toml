@@ -13,7 +13,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
-    "python-dotenv==1.2.1",
+    "python-dotenv==1.2.2",
 ]
 [project.urls]
 Homepage = "https://github.com/jnstockley/python-starter"
