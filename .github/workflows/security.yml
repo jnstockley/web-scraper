@@ -35,20 +35,29 @@ jobs:
             echo "exists=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Fetch secrets from Infisical
+        uses: Infisical/secrets-action@v1.0.16
+        with:
+          method: "oidc"
+          identity-id: ${{ env.INFISICAL_IDENTITY_ID }}
+          domain: "https://secrets.jstockley.com"
+          project-slug: ${{ github.event.repository.name }}
+          env-slug: "production"
+
       - name: Log in to Docker Hub
         if: steps.dockerfile_check.outputs.exists == 'true'
         uses: docker/login-action@v4
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Log in to Docker Hub
         if: steps.dockerfile_check.outputs.exists == 'true'
         uses: docker/login-action@v4
         with:
           registry: dhi.io
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build Docker image
         if: steps.dockerfile_check.outputs.exists == 'true' && github.event_name != 'schedule'
