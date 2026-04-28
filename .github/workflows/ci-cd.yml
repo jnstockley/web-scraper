@@ -16,11 +16,6 @@ on:
       - uv.lock
       - .github/workflows/**.yml
 
-permissions:
-  contents: read
-  id-token: write  # Required for OIDC authentication
-
-
 jobs:
   lint:
     name: Lint
@@ -161,6 +156,7 @@ jobs:
     permissions:
       packages: write
       contents: read
+      id-token: write  # Required for OIDC authentication
 
     steps:
       - name: Step 1 - Check out the repo
