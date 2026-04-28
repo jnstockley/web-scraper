@@ -43,7 +43,7 @@ jobs:
           identity-id: ${{ vars.INFISICAL_IDENTITY_ID }}
           domain: "https://secrets.jstockley.com"
           project-slug: ${{ github.event.repository.name }}
-          env-slug: "production"
+          env-slug: "Production"
 
       - name: Log in to Docker Hub
         if: steps.dockerfile_check.outputs.exists == 'true'
