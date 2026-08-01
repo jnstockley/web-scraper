@@ -5,12 +5,11 @@ from typing import Literal
 
 import pandas as pd
 import tls_client
-from typing_extensions import Optional, Union
 
 from src.util.logging import logger
 
 
-def create_tls_session(proxy: str = None) -> tls_client.Session:
+def create_tls_session(proxy: str | None = None) -> tls_client.Session:
     """
     Create a TLS session with the given proxy, if applicable.
     :param proxy: Proxy string in the format https://user:pass@ip:port
@@ -30,15 +29,15 @@ def make_tls_request(
     method: Literal["GET", "POST", "PUT", "DELETE"],
     url: str,
     session: tls_client.Session,
-    params: Optional[dict] = None,
-    data: Optional[Union[str, dict]] = None,
-    headers: Optional[dict] = None,
-    cookies: Optional[dict] = None,
-    json: Optional[dict] = None,
-    allow_redirects: Optional[bool] = False,
-    insecure_skip_verify: Optional[bool] = False,
-    timeout_seconds: Optional[int] = None,
-    proxy: Optional[dict] = None,
+    params: dict | None = None,
+    data: str | dict | None = None,
+    headers: dict | None = None,
+    cookies: dict | None = None,
+    json: dict | None = None,
+    allow_redirects: bool | None = False,
+    insecure_skip_verify: bool | None = False,
+    timeout_seconds: int | None = None,
+    proxy: dict | None = None,
 ):
     """
     Make a TLS request with the given parameters.
@@ -75,9 +74,9 @@ def make_tls_request(
         if "application/json" in response_headers.get("Content-Type", ""):
             try:
                 return response.json()
-            except ValueError as e:
+            except ValueError:
                 logger.error("Response content is not valid JSON")
-                raise e
+                raise
         return response.content.decode(encoding="utf-8")
 
     raise ConnectionError(f"Request failed with status code {response.status_code}")

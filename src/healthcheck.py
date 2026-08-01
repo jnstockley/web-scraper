@@ -1,4 +1,5 @@
 import os
+import sys
 
 from dotenv import load_dotenv
 
@@ -19,4 +20,4 @@ if __name__ == "__main__":
             up_to_date = False
 
     if not up_to_date:
-        exit(1)
+        sys.exit(1)

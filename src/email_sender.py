@@ -34,7 +34,7 @@ def send_email_str(text: str):
     __send_email__("Tesla NACS Website Update", html)
 
 
-def __send_email__(subject: str, html: str, attachment: StringIO = None):
+def __send_email__(subject: str, html: str, attachment: StringIO | None = None):
     load_dotenv()
     sender_email = os.environ["SENDER_EMAIL"]
     from_email = os.environ["FROM_EMAIL"]
