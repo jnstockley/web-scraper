@@ -1,8 +1,8 @@
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
 
-from bs4 import BeautifulSoup
 import pandas as pd
+from bs4 import BeautifulSoup
 from pandas import DataFrame
 
 from src.email_sender import send_email

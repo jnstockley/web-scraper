@@ -1,10 +1,10 @@
-import time
 import os
 import sys
+import time
 
 from dotenv import load_dotenv
 
-from src.scrapers import text, diff, cars_com
+from src.scrapers import cars_com, diff, text
 from util.healthcheck import healthcheck
 from util.logging import logger
 
@@ -23,7 +23,7 @@ def main():
                 logger.info(f"Checking URL: {url} for text: {scrape_text}")
                 text.scrape(url, scrape_text)
             case "diff":
-                percentage = float(os.environ.get("PERCENTAGE", 10))
+                percentage = float(os.environ.get("PERCENTAGE", "10"))
                 logger.info("Using diff scraper")
                 logger.info(f"Checking URL: {url}")
                 diff.scrape(url, percentage)
