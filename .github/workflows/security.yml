@@ -59,7 +59,7 @@ jobs:
           password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build the image being published
-        if: steps.dockerfile.outputs.exists == 'true' && (github.event_name == 'release' || (github.event_name == 'push' && github.ref_name == 'main'))
+        if: steps.dockerfile.outputs.exists == 'true' && github.event_name == 'release' && !github.event.release.prerelease
         run: |
           if [ "$GITHUB_EVENT_NAME" != release ]; then
             VERSION="${{ github.event.release.tag_name }}"
@@ -72,7 +72,7 @@ jobs:
             -t "${{ env.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest" .
 
       - name: Pull the latest published image
-        if: steps.dockerfile.outputs.exists == 'true' && github.event_name != 'release' && !(github.event_name == 'push' && github.ref_name == 'main')
+        if: steps.dockerfile.outputs.exists == 'true' && (github.event_name != 'release' || github.event.release.prerelease)
         run: docker pull "${{ env.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest"
 
       - name: Scan the Docker image
@@ -99,11 +99,11 @@ jobs:
           check-latest: true
 
       - name: Install uv
-        if: steps.dockerfile.outputs.exists == 'false' && (github.event_name == 'release' || (github.event_name == 'push' && github.ref_name == 'main'))
+        if: steps.dockerfile.outputs.exists == 'false' && github.event_name == 'release' && !github.event.release.prerelease
         uses: astral-sh/setup-uv@v10.0.1
 
       - name: Build the package being published
-        if: steps.dockerfile.outputs.exists == 'false' && (github.event_name == 'release' || (github.event_name == 'push' && github.ref_name == 'main'))
+        if: steps.dockerfile.outputs.exists == 'false' && github.event_name == 'release' && !github.event.release.prerelease
         run: |
           if [ "$GITHUB_EVENT_NAME" = release ]; then
             VERSION="${{ github.event.release.tag_name }}"
@@ -115,7 +115,7 @@ jobs:
           uv build --out-dir .trivy-package
 
       - name: Download the latest published package
-        if: steps.dockerfile.outputs.exists == 'false' && github.event_name != 'release' && !(github.event_name == 'push' && github.ref_name == 'main')
+        if: steps.dockerfile.outputs.exists == 'false' && (github.event_name != 'release' || github.event.release.prerelease)
         run: python -m pip download --no-deps --dest .trivy-package js-python-starter
 
       - name: Scan the Python package
