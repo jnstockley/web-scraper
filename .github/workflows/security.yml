@@ -59,7 +59,7 @@ jobs:
           password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build the image being published
-        if: steps.dockerfile.outputs.exists == 'true' && (github.event_name == 'release' || (github.event_name == 'push' && github.ref_name == 'main'))
+        #if: steps.dockerfile.outputs.exists == 'true' && (github.event_name == 'release' || (github.event_name == 'push' && github.ref_name == 'main'))
         run: |
           if [ "$GITHUB_EVENT_NAME" != release ]; then
             VERSION="${{ github.event.release.tag_name }}"
