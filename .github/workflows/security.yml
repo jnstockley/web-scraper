@@ -71,9 +71,9 @@ jobs:
             --build-arg "VERSION=$VERSION" \
             -t "${{ env.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest" .
 
-      - name: Pull the latest published image
-        if: steps.dockerfile.outputs.exists == 'true' && github.event_name != 'release' && !(github.event_name == 'push' && github.ref_name == 'main')
-        run: docker pull "${{ env.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest"
+      #- name: Pull the latest published image
+      #  if: steps.dockerfile.outputs.exists == 'true' && github.event_name != 'release' && !(github.event_name == 'push' && github.ref_name == 'main')
+      #  run: docker pull "${{ env.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest"
 
       - name: Scan the Docker image
         if: steps.dockerfile.outputs.exists == 'true'
